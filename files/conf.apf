@@ -79,26 +79,26 @@ SET_MONOKERN="0"
 # system. This only applies to local bans from deny_hosts.rules and not global
 # import rules. The value must not be less than equiv. seconds of SET_REFRESH.
 # [value in seconds, 0 to disable, recommended 600]
-SET_EXPIRE="0"
+SET_EXPIRE="900"
 
 # This controls how often, if at all, we want the trust system to refresh rules.
 # The firewall will flush & reload all static rules, redownload global rules and
 # re-resolve any dns names in the rules. This is ideal when using dynamic dns
 # names or downloadable global trust rules.
 # [value in minutes, 0 to disable]
-SET_REFRESH="10"
+SET_REFRESH="15"
 
 # The refreshing of large allow/deny trust files can be resource intensive, this
 # feature checks for changes to trust files between refreshes and only performs
 # a refresh if contents have changed. If you are using dynamic DNS names in trust
 # rules, which require regular DNS refreshes, you should keep this disabled.
 # [value in minutes, 0 to disable]
-SET_REFRESH_MD5="0"
+SET_REFRESH_MD5="1"
 
 # This is the total amount of rules allowed inside of the deny trust system.
 # When this limit is reached, the deny rule files will begin to purge older
 # entries to maintain the set limit. [value is max lines, 0 for unlimited]
-SET_TRIM="200"
+SET_TRIM="150"
 
 # Verifies that the IFACE_* and IFACE_TRUSTED interfaces are actually routed
 # to something. If configured interfaces are found with no routes setup then
@@ -123,7 +123,7 @@ VF_LGATE=""
 # an attacker has already done. The interface that powers RAB is the iptables kernel
 # module 'xt/ipt_recent'; as such there is no external programs required for this
 # feature or additional load imposed by it.
-RAB="0"
+RAB="1"
 
 # This enables RAB for sanity violations, which is when an address breaks a 
 # strict conformity standard such as trying to spoof an address or modify
@@ -146,7 +146,7 @@ RAB_HITCOUNT="1"
 
 # This is the amount of time (in seconds) that an address gets blocked for if
 # a violation is triggered, the default is 300s (5 minutes).
-RAB_TIMER="300"
+RAB_TIMER="600"
 
 # This allows RAB to 'trip' the block timer back to 0 seconds if an address
 # attempts ANY subsiquent communication while still on the inital block period.
@@ -226,10 +226,10 @@ TOS_2=""
 TOS_4=""
 
 # 8: Ports for Maximum Throughput - Minimum Delay
-TOS_8="21,20,80"
+TOS_8="21,20,80,443"
 
 # 16: Ports for No Delay - Moderate Throughput - High Reliability
-TOS_16="25,110,143"
+TOS_16="25,110,143,53"
 
 # Allow traceroute requests on the defined range of ports. This feature
 # is not required for normal operations and some even prefer it disabled.
@@ -273,7 +273,7 @@ BLK_PORTS="135_139,111,513,520,445,1433,1434,1234,1524,3127"
 # bandwidth network on top of the Internet which carries audio and video
 # broadcasts. More about MBONE at: www-itg.lbl.gov/mbone/, this is generally
 # safe to enable. 
-BLK_MCATNET="0"
+BLK_MCATNET="1"
 
 # Block all private ipv4 addresses, this is address space reserved for private
 # networks or otherwise unroutable on the Internet. If this host resides behind 
@@ -309,12 +309,12 @@ SYSCTL_TCP="1"
 
 # These are system control (sysctl) option changes intended to help mitigate
 # syn-flood attacks by lowering syn retry, syn backlog & syn time-out values.
-SYSCTL_SYN="0"
+SYSCTL_SYN="1"
 
 # These are system control (sysctl) option changes to provide protection from
 # spoofed packets and ip/arp/route redirection. If you are performing advanced
 # routing policies on this host such as NAT/MASQ you should disable this.
-SYSCTL_ROUTE="0"
+SYSCTL_ROUTE="1"
 
 # This system control (sysctl) option will log all network traffic that is
 # from impossible source addresses. This option can discover attacks or issues
@@ -358,7 +358,7 @@ SYSCTL_OVERFLOW="0"
 HELPER_SSH="1"
 HELPER_SSH_PORT="22"
 
-HELPER_FTP="1"
+HELPER_FTP="0"
 HELPER_FTP_PORT="21"
 HELPER_FTP_DATA="20"
 
@@ -462,8 +462,8 @@ DLIST_SPAMHAUS_URL="http://www.spamhaus.org/drop/drop.lasso"
 # This data is cataloged, summarized and can be used to discover trends in
 # activity, confirm widespread attacks, or assist in preparing better firewall
 # rules. This is a list of top networks that have exhibited suspicious activity.
-DLIST_DSHIELD="0"
-DLIST_DSHIELD_URL="http://feeds.dshield.org/top10-2.txt"
+DLIST_DSHIELD="1"
+DLIST_DSHIELD_URL="dshield.org/block.txt"
 
 # The reserved networks list is addresses which ARIN has marked as reserved
 # for future assignement and have no business as valid traffic on the internet.
