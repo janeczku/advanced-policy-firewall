@@ -127,9 +127,6 @@ $IPT -N TDENY
 $IPT -N TGALLOW
 $IPT -N TGDENY
 $IPT -N REFRESH_TEMP
-$IPT -t nat -N TALLOW
-$IPT -t nat -N TGALLOW
-$IPT -t nat -N REFRESH_TEMP
 #$IPT -A INPUT -j REFRESH_TEMP
 $IPT -A INPUT -p tcp -m multiport --dports 80,443,53 -j REFRESH_TEMP
 $IPT -A INPUT -p udp --dport 53 -j REFRESH_TEMP
