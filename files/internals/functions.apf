@@ -75,8 +75,9 @@ check_rab() {
  ml xt_recent
  ml ipt_recent
  if [ ! -f "/lib/modules/$(uname -r)/kernel/net/ipv4/netfilter/ipt_recent.$MEXT" ] && [ ! -f "/lib/modules/$(uname -r)/kernel/net/ipv4/netfilter/xt_recent.$MEXT" ] && [ ! -f "/lib/modules/$(uname -r)/kernel/net/netfilter/xt_recent.$MEXT" ] && [ "$RAB" == "1" ]; then
-	RAB="0"
-	eout "{rab} force set RAB disabled, kernel module xt/ipt_recent not found."
+	RAB="1"
+	#eout "{rab} force set RAB disabled, kernel module xt/ipt_recent not found."
+	eout "{rab} kernel module xt/ipt_recent not found. Assuming this is OpenVZ."
  fi
 }
 
@@ -1120,14 +1121,14 @@ refresh() {
 
 cron_refresh() {
 if [ ! "$SET_REFRESH" == "0" ] && [ ! "$SET_REFRESH" == "" ]; then
-cat<<EOF > $INSTALL_PATH/internals/cron.refresh
+cat<<EOF > $INSTALL_PATH/internals/cron_refresh
 */$SET_REFRESH * * * * root /etc/apf/apf --refresh >> /dev/null 2>&1 &
 EOF
-	chmod 644 $INSTALL_PATH/internals/cron.refresh
-	ln -fs $INSTALL_PATH/internals/cron.refresh /etc/cron.d/refresh.apf
+	chmod 644 $INSTALL_PATH/internals/cron_refresh
+	ln -fs $INSTALL_PATH/internals/cron_refresh /etc/cron.d/refresh_apf
 	eout "{glob} SET_REFRESH is set to $SET_REFRESH minutes"
 else
-	rm -f /etc/cron.d/refresh.apf
+	rm -f /etc/cron.d/refresh_apf
 	eout "{glob} SET_REFRESH is set disabled"
 
 fi
