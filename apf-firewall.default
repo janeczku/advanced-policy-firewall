@@ -1,0 +1,5 @@
+# Defaults file for HAProxy
+#
+# This is sourced by both, the initscript and the systemd unit file, so do not
+# treat it as a shell script fragment.
+ENABLED=1
