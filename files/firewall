@@ -69,8 +69,8 @@ fi
 eout "{glob} determined (IFACE_UNTRUSTED) $IFACE_UNTRUSTED has address $NET"
 
 # Load our PREROUTE rules
-tosroute PREROUTING
-. $PRERT
+#tosroute PREROUTING
+#. $PRERT
 
 # Allow all traffic on the loopback interface
 $IPT -A INPUT -i lo -s 0/0 -d 0/0 -j ACCEPT
@@ -120,16 +120,23 @@ if [ "$BLK_RESNET" = "1" ]; then
 	fi
 	dnet $RESNET
 fi
-
+eout "{glob} creating trust system chains"
 # Create (glob)trust system chains
 $IPT -N TALLOW
 $IPT -N TDENY
 $IPT -N TGALLOW
 $IPT -N TGDENY
 $IPT -N REFRESH_TEMP
-$IPT -A INPUT -j REFRESH_TEMP
+$IPT -t nat -N TALLOW
+$IPT -t nat -N TGALLOW
+$IPT -t nat -N REFRESH_TEMP
+#$IPT -A INPUT -j REFRESH_TEMP
+$IPT -A INPUT -p tcp -m multiport --dports 80,443,53 -j REFRESH_TEMP
+$IPT -A INPUT -p udp --dport 53 -j REFRESH_TEMP
 $IPT -A OUTPUT -j REFRESH_TEMP
-$IPT -A INPUT -j TALLOW
+#$IPT -A INPUT -j TALLOW
+$IPT -A INPUT -p tcp -m multiport --dports 80,443,53 -j TALLOW
+$IPT -A INPUT -p udp --dport 53 -j TALLOW
 $IPT -A OUTPUT -j TALLOW
 $IPT -A INPUT -j TGALLOW
 $IPT -A OUTPUT -j TGALLOW
@@ -137,6 +144,10 @@ $IPT -A INPUT -j TDENY
 $IPT -A OUTPUT -j TDENY
 $IPT -A INPUT -j TGDENY
 $IPT -A OUTPUT -j TGDENY
+
+# Load our PREROUTE rules
+tosroute PREROUTING
+. $PRERT
 
 # Load our Blocked Traffic rules
 . $INSTALL_PATH/bt.rules
