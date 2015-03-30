@@ -1,3 +1,7 @@
 eout "{glob} loading preroute.rules"
 
 # place your custom routing rules below
+# Throttle HTTPS
+#iptables -N HTTPSRATELIMIT
+#iptables -I HTTPSRATELIMIT -m hashlimit --hashlimit-name HTTPS --hashlimit-above 20/second --hashlimit-mode srcip --hashlimit-burst 40 --hashlimit-srcmask 32 -j DROP
+#iptables -I INPUT -p tcp --dport 443 -j HTTPSRATELIMIT
