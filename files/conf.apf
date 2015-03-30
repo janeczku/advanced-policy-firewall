@@ -246,7 +246,7 @@ ICMP_LIM="30/s"
 # /etc/resolv.conf file. This is the preferred secure method for client side
 # name server requests. This option has no bearing on a locally hosted DNS 
 # service.
-RESV_DNS="1"
+RESV_DNS="0"
 
 # When RESV_DNS is enabled, all the untrusted name server traffic can fill the 
 # logs with client DNS traffic. This can be suppressed with an implicit drop 
