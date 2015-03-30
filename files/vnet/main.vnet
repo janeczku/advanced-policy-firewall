@@ -15,6 +15,7 @@ for i in `ls $INSTALL_PATH/vnet/ | grep .rules`; do
         if [ ! "$IFVALIP" == "" ]; then
                 source $INSTALL_PATH/conf.apf
                 source $INSTALL_PATH/vnet/$i
+		eout "{glob} $VALIP is bound, parsed $VALIP.rules"
         else
                 eout "{glob} $VALIP not bound, skipping $VALIP.rules"
         fi
