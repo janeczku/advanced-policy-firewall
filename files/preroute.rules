@@ -1,9 +1,6 @@
 eout "{glob} loading preroute.rules"
 
 # place your custom routing rules below
-# load TOS prerouting function
-# do not remove or TOS vars will not function
-tospreroute
 
 # Disable DNS conn-tracking
 # Old syntax
@@ -13,21 +10,21 @@ tospreroute
 #iptables -t raw -I OUTPUT -p udp --sport 53 -j NOTRACK
 
 # Ney syntax
-iptables -t raw -I PREROUTING -p udp --dport 53 -j CT --notrack
-iptables -t raw -I PREROUTING -p udp --sport 53 -j CT --notrack
-iptables -t raw -I OUTPUT -p udp --dport 53 -j CT --notrack
-iptables -t raw -I OUTPUT -p udp --sport 53 -j CT --notrack
+#iptables -t raw -I PREROUTING -p udp --dport 53 -j CT --notrack
+#iptables -t raw -I PREROUTING -p udp --sport 53 -j CT --notrack
+#iptables -t raw -I OUTPUT -p udp --dport 53 -j CT --notrack
+#iptables -t raw -I OUTPUT -p udp --sport 53 -j CT --notrack
 
 # Throttle DNS
-iptables -N DNSRATELIMIT
-iptables -I DNSRATELIMIT -m hashlimit --hashlimit-name DNS --hashlimit-above 20/second --hashlimit-mode srcip --hashlimit-burst 80 --hashlimit-srcmask 28 -j DROP
-iptables -I INPUT -p udp --dport 53 -j DNSRATELIMIT
-iptables -I INPUT -p tcp --dport 53 -j DNSRATELIMIT
+#iptables -N DNSRATELIMIT
+#iptables -I DNSRATELIMIT -m hashlimit --hashlimit-name DNS --hashlimit-above 20/second --hashlimit-mode srcip --hashlimit-burst 80 --hashlimit-srcmask 28 -j DROP
+#iptables -I INPUT -p udp --dport 53 -j DNSRATELIMIT
+#iptables -I INPUT -p tcp --dport 53 -j DNSRATELIMIT
 
 # Throttle HTTPS
-iptables -N HTTPSRATELIMIT
-iptables -I HTTPSRATELIMIT -m hashlimit --hashlimit-name HTTPS --hashlimit-above 20/second --hashlimit-mode srcip --hashlimit-burst 40 --hashlimit-srcmask 32 -j DROP
-iptables -I INPUT -p tcp --dport 443 -j HTTPSRATELIMIT
+#iptables -N HTTPSRATELIMIT
+#iptables -I HTTPSRATELIMIT -m hashlimit --hashlimit-name HTTPS --hashlimit-above 20/second --hashlimit-mode srcip --hashlimit-burst 40 --hashlimit-srcmask 32 -j DROP
+#iptables -I INPUT -p tcp --dport 443 -j HTTPSRATELIMIT
 
 # Redirect unauthorized DNS requests
 #iptables -t nat -A PREROUTING -i eth0 -p udp --dport 53 -j REDIRECT --to-ports 5353
