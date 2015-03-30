@@ -18,6 +18,18 @@ head() {
 	echo ""
 }
 
+ENABLED=0
+
+if [ -e /etc/default/apf-firewall ]; then
+        . /etc/default/apf-firewall
+fi
+
+if [ "$ENABLED" = "0" ]
+then
+        echo "APF disabled (/etc/default/apf-firewall), aborting."
+        exit 0
+fi
+
 if [ -f "$CNF" ] && [ ! "$CNF" == "" ]; then
    source $CNF
 else
