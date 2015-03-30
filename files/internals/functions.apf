@@ -56,10 +56,10 @@ ml() {
 
 modinit() {
  # Remove ipchains module if loaded
- IPC_VAL=`$LSM | grep ipchains`
- if [ ! "$IPC_VAL" == "" ]; then
-        $RMM ipchains
- fi
+ #IPC_VAL=`$LSM | grep ipchains`
+ #if [ ! "$IPC_VAL" == "" ]; then
+ #       $RMM ipchains
+ #fi
  if [ ! "$SET_MONOKERN" == "1" ]; then
         # Loading Kernel Modules
         ml ip_tables 1
@@ -913,8 +913,8 @@ if [ ! "$GA_URL" == "" ] && [ "$USE_RGT" == "1" ] && [ -f "$WGET" ]; then
    rm -rf $URL_TMP
    cd /etc/apf
 else
-   rm -f $GALLOW_HOSTS
-   touch $GALLOW_HOSTS
+   #rm -f $GALLOW_HOSTS
+   #touch $GALLOW_HOSTS
    chmod 600 $GALLOW_HOSTS
 fi
 }
