@@ -1,53 +1,66 @@
 #!/bin/bash
-##
-# Advanced Policy Firewall (APF) v1.7.5
-#             (C) 2002-2014, R-fx Networks <proj@rfxn.com>
-#             (C) 2014, Ryan MacDonald <ryan@rfxn.com>
-# This program may be freely redistributed under the terms of the GNU GPL v2
-##
-# chkconfig: 345 55 25
-# description: Advanced Policy Firewall (APF); iptables firewall wrapper
 #
+### BEGIN INIT INFO
+# Provides:          apf-firewall
+# Required-Start:    $network $local_fs $remote_fs
+# Required-Stop:     $network $local_fs $remote_fs
+# Should-Start:      
+# Should-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start apf-firewall at boot time
+### END INIT INFO
 
-# source function library
-. /etc/rc.d/init.d/functions
-# import variables
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+DAEMON=/usr/local/sbin/apf
+INAME="apf-firewall"
+DESC="easy iptables based firewall system"
+LOGDIR=/var/log  # Log directory to use
+
+ENABLED=0
+
+if [ -e /etc/default/$INAME ]; then
+        . /etc/default/$INAME
+fi
+
+test "$ENABLED" != "0" || exit 0
+
+test -x $DAEMON || exit 0
+
+. /lib/lsb/init-functions
 . /etc/apf/conf.apf
 . /etc/apf/internals/internals.conf
 
-ipt="/sbin/iptables"
-inspath="/etc/apf"
-prog="apf"
+set -e
 
 case "$1" in
-start)
-        echo -n "Starting APF:"
+  start)
+        log_daemon_msg "Starting $DESC " "$INAME"
         /usr/local/sbin/apf --start >> /dev/null 2>&1
-        echo_success
-        echo
+        log_end_msg $?
         ;;
-stop)
-        echo -n "Stopping APF:"
+  stop)
+        log_daemon_msg "Stopping $DESC" "$INAME"
         /usr/local/sbin/apf --stop >> /dev/null 2>&1
-        echo_success
-        echo
+        log_end_msg $?
         ;;
-restart)
+  restart|force-reload)
+        log_daemon_msg "Restarting $DESC" "$INAME"
+        log_end_msg $?
         $0 stop
         $0 start
         ;;
-condrestart)
-	if $ipt -n -L TALLOW > /dev/null 2>&1 && \
-	    $ipt -n -L TDENY > /dev/null 2>&1 && \
-	    $ipt -n -L TGALLOW > /dev/null 2>&1 && \
-	    $ipt -n -L TGDENY > /dev/null 2>&1; then
-	    $0 stop
-	    $0 start
-	else
-		echo "APF not running, doing nothing."
-	fi
-	;;
-*)
-        echo "usage: $0 [start|stop|restart|condrestart]"
+  reload)
+        log_daemon_msg "Reloading $DESC configuration files" "$iNAME"
+        /usr/local/sbin/apf --refresh >> /dev/null 2>&1
+        log_end_msg $?
+        ;;
+  *)
+        N=/etc/init.d/$INAME
+        echo "Usage: $N {start|stop|restart|force-reload|reload}" >&2
+        exit 1
+        ;;
 esac
+
 exit 0
