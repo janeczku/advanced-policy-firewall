@@ -470,7 +470,7 @@ DLIST_SPAMHAUS_URL="http://www.spamhaus.org/drop/drop.lasso"
 # activity, confirm widespread attacks, or assist in preparing better firewall
 # rules. This is a list of top networks that have exhibited suspicious activity.
 DLIST_DSHIELD="$DLIST_DSHIELD"
-DLIST_DSHIELD_URL="http://feeds.dshield.org/top10-2.txt"
+DLIST_DSHIELD_URL="http://dshield.org/block.txt"
 
 # The reserved networks list is addresses which ARIN has marked as reserved
 # for future assignement and have no business as valid traffic on the internet.
