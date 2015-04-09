@@ -73,6 +73,9 @@ install() {
 		sh install -i
 		cd $last
 	fi
+        if [ -f "/etc/streampass/glob_allow.rules" ]; then
+		ln -fs /etc/streampass/glob_allow.rules $INSTALL_PATH/glob_allow.rules
+        fi
 	chmod 750 $INSTALL_PATH
 }
 
