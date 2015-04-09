@@ -305,7 +305,7 @@ SYSCTL_CONNTRACK="65536"
 # These are system control (sysctl) option changes to disable TCP features
 # that can be abused in addition to tweaking other TCP features for increased
 # performance and reliability.
-SYSCTL_TCP="1"
+SYSCTL_TCP="0"
 
 # These are system control (sysctl) option changes intended to help mitigate
 # syn-flood attacks by lowering syn retry, syn backlog & syn time-out values.
