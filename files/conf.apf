@@ -59,7 +59,7 @@ SET_FASTLOAD="0"
 # each IP on a system to /etc/apf/vnet/IP.rules. These rule files can be
 # configured with conf.apf variables for unique but convenient firewall
 # policies or custom iptables entries for even greater flexibility.
-SET_VNET="0"
+SET_VNET="1"
 
 # This feature firewalls any additional interfaces on the server as untrusted
 # through the VNET sub-system. Excluded are interfaces that have already been
@@ -67,7 +67,7 @@ SET_VNET="0"
 # private interfaces where not all hosts on the private network are trusted or
 # are otherwise exposed to "open" networks through this private interface
 # (i.e: the Internet, network accessible storage LAN, corporate WAN, etc..)
-SET_ADDIFACE="0"
+SET_ADDIFACE="1"
 
 # This allows the firewall to work around modular kernel issues by assuming
 # that the system has all required firewall modules compiled directly into
