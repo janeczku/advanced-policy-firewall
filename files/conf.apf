@@ -15,7 +15,7 @@
 ##
 # !!! Do not leave set to (1) !!!
 # When set to enabled; 5 minute cronjob is set to stop the firewall. Set
-# this off (0) when firewall is determined to be operating as desired.
+# this off (0) when firewalls is determined to be operating as desired.
 DEVEL_MODE="1"
 
 # The installation path of APF; this can be changed but it is not recommended.
@@ -305,7 +305,7 @@ SYSCTL_CONNTRACK="65536"
 # These are system control (sysctl) option changes to disable TCP features
 # that can be abused in addition to tweaking other TCP features for increased
 # performance and reliability.
-SYSCTL_TCP="1"
+SYSCTL_TCP="0"
 
 # These are system control (sysctl) option changes intended to help mitigate
 # syn-flood attacks by lowering syn retry, syn backlog & syn time-out values.
