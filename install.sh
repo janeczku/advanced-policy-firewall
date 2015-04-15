@@ -53,7 +53,7 @@ install() {
 			fi
 		fi
         fi
-        if [ -d "/etc/default/apf-firewall" ]; then
+        if [ -f "/etc/default/apf-firewall" ]; then
         	cp -f apf-firewall.default /etc/default/apf-firewall
         fi
 	if [ -f "/var/log/apf_log" ] || [ -f "/var/log/apfados_log" ]; then
