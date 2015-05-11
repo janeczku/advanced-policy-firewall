@@ -18,6 +18,15 @@ arg=$1
         fi
 }
 
+seout() {
+arg=$1
+        if [ ! "$arg" == "" ]; then
+                if [ "$SET_VERBOSE" == "1" ] || [ "$2" == "1" ]; then
+                        echo "$APPN($$): $arg"
+                fi
+        fi
+}
+
 devm() {
  cron_file="/etc/cron.d/apf_develmode"
  if [ "$DEVEL_MODE" == "1" ]; then
@@ -353,7 +362,7 @@ if [ ! "`cat $file | grep -v "#"`" == "" ]; then
                 val=`cat /etc/apf/internals/.localaddrs | grep -w $i`
                 if [ ! "$val" ]; then
                  if [ ! "$i" == "" ] && [ -f "$file" ]; then
-                        eout "{trust} allow all to/from $i"
+                        seout "{trust} allow all to/from $i"
                         $IPT -A $chain -s $i -d 0/0 -j ACCEPT
                         $IPT -A $chain -d $i -s 0/0 -j ACCEPT
                  fi
@@ -388,7 +397,7 @@ if [ ! "`cat $file | grep -v "#"`" == "" ]; then
                         PIP=`echo $i | tr ':' ' ' | tr '=' ' ' | awk '{print$4}'`
 
                         if [ ! "$IPFLOW" == "" ] && [ ! "$PIP" == "" ] && [ ! "$IPFLOW" == "" ] && [ ! "$PPORT" == "" ]; then
-                                eout "{trust} allow $PIP $PFLOW_T port $PPORT"
+                                seout "{trust} allow $PIP $PFLOW_T port $PPORT"
                                 $IPT -A $chain -p tcp -m multiport -$IPFLOW $PIP --$PFLOW $PPORT -j ACCEPT
                                 $IPT -A $chain -p udp -m multiport -$IPFLOW $PIP --$PFLOW $PPORT -j ACCEPT
                         fi
@@ -438,7 +447,7 @@ if [ ! "`cat $file | grep -v "#"`" == "" ]; then
                          elif [ "$IPFLOW" == "d" ] && [ "$NFLOW" == "OUTPUT" ] && [ "$(cat /etc/apf/internals/.localaddrs | grep -w $PIP)" ]; then
                                 eout "{trust} ignored local ip allow rule '$NFLOW_T $PIP $PFLOW_T port $PPORT'"
                          else
-                                eout "{trust} allow $NFLOW_T $PIP $PFLOW_T port $PPORT"
+                                seout "{trust} allow $NFLOW_T $PIP $PFLOW_T port $PPORT"
                                 $IPT -A $chain -p tcp -m multiport -$IPFLOW $PIP --$PFLOW $PPORT -j ACCEPT
                                 $IPT -A $chain -p udp -m multiport -$IPFLOW $PIP --$PFLOW $PPORT -j ACCEPT
                          fi
@@ -497,10 +506,10 @@ if [ ! "`cat $file | grep -v "#"`" == "" ]; then
                                 eout "{trust} ignored local ip allow rule '$NFLOW_T $PIP $PFLOW_T port $PPORT'"
                          else
                                 if [ "$PTYPE" == "tcp" ]; then
-	                                eout "{trust} allow $NFLOW_T $PTYPE $PIP $PFLOW_T port $PPORT"
+	                                seout "{trust} allow $NFLOW_T $PTYPE $PIP $PFLOW_T port $PPORT"
 	                                $IPT -A $chain -p $PTYPE -m multiport -$IPFLOW $PIP --$PFLOW $PPORT -j ACCEPT
                                 elif [ "$PTYPE" == "udp" ]; then
-                                        eout "{trust} allow $NFLOW_T $PTYPE $PIP $PFLOW_T port $PPORT"
+                                        seout "{trust} allow $NFLOW_T $PTYPE $PIP $PFLOW_T port $PPORT"
 		                        $IPT -A $chain -p $PTYPE -m multiport -$IPFLOW $PIP --$PFLOW $PPORT -j ACCEPT
                                 fi
                          fi
