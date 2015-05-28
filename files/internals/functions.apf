@@ -65,10 +65,10 @@ ml() {
 
 modinit() {
  # Remove ipchains module if loaded
- #IPC_VAL=`$LSM | grep ipchains`
- #if [ ! "$IPC_VAL" == "" ]; then
- #       $RMM ipchains
- #fi
+ IPC_VAL=`$LSM | grep ipchains`
+ if [ ! "$IPC_VAL" == "" ]; then
+        $RMM ipchains
+ fi
  ## Virtuozzo/OpenVZ based VPS require the monokern option enabled
  if [ -d /proc/vz -a ! -d /proc/bc ]; then
  	eout "{glob} OpenVZ/Virtuozzo VPS detected, forced monokern option enabled"
