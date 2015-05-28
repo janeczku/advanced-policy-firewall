@@ -69,6 +69,11 @@ modinit() {
  if [ ! "$IPC_VAL" == "" ]; then
         $RMM ipchains
  fi
+ ## Virtuozzo/OpenVZ based VPS require the monokern option enabled
+ if [ -d /proc/vz -a ! -d /proc/bc ]; then
+ 	eout "{glob} OpenVZ/Virtuozzo VPS detected, forced monokern option enabled"
+ 	SET_MONOKERN="1"
+ fi
  if [ ! "$SET_MONOKERN" == "1" ]; then
         # Loading Kernel Modules
         ml ip_tables 1
