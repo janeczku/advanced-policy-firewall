@@ -260,7 +260,7 @@ RESV_DNS_DROP="1"
 # client agents for the purpose of distributing or downloading pirated media.
 # Format is comma separated for single ports and an underscore separator for
 # ranges (4660_4678).
-BLK_P2P_PORTS="1214,2323,4660_4678,6257,6699,6346,6347,6881_6889,6346,7778"
+BLK_P2P_PORTS=""
 
 # These are common Internet service ports that are understood in the wild 
 # services you would not want logged under normal circumstances. All ports
@@ -273,7 +273,7 @@ BLK_PORTS="135_139,111,513,520,445,1433,1434,1234,1524,3127"
 # bandwidth network on top of the Internet which carries audio and video
 # broadcasts. More about MBONE at: www-itg.lbl.gov/mbone/, this is generally
 # safe to enable. 
-BLK_MCATNET="1"
+BLK_MCATNET="0"
 
 # Block all private ipv4 addresses, this is address space reserved for private
 # networks or otherwise unroutable on the Internet. If this host resides behind 
@@ -287,7 +287,7 @@ BLK_PRVNET="0"
 # some point become live address space. The USE_RD option further in this file
 # allows for dynamic updating of this list on every full restart of APF. Refer
 # to the 'internals/reserved.networks' file for listing of address space.
-BLK_RESNET="1"
+BLK_RESNET="0"
 
 # Block all ident (tcp 113) requests in and out of the server IF the port is
 # not already opened in *_TCP_CPORTS. This uses a REJECT target to make sure
