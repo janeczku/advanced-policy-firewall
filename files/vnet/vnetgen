@@ -29,7 +29,7 @@ if [ ! -f "$ip" ] && [ ! -f "$ifconfig" ]; then
 	echo "$ip and $ifconfig not found; aborting"
         exit 1
 elif [ -f "$ip" ]; then
- for addr in `/sbin/ip addr list | tr '/' ' ' | grep -w inet | grep -w $IF | grep -v 127.0.0.1 | grep -vw $NET | awk '{print$2}'`; do
+ for addr in `/sbin/ip addr list | tr '/' ' ' | grep -w inet | grep -w global | grep -w $IF | grep -v 127.0.0.1 | grep -vw $NET | awk '{print$2}'`; do
   if [ ! -f "$INSTALL_PATH/vnet/$addr.rules" ]; then
         touch $INSTALL_PATH/vnet/$addr.rules
         chmod 600 $INSTALL_PATH/vnet/$addr.rules
@@ -38,7 +38,7 @@ elif [ -f "$ip" ]; then
  done
 elif [ -f "$ifconfig" ]; then
 for iface in `ifconfig | grep -w $IF | awk '{print$1}'`; do
-  for addr in `ifconfig $iface | grep -w inet | tr ':' ' ' | grep -vw $NET | awk '{print$3}'`; do
+  for addr in `ifconfig $iface | grep -w inet | grep -w global | tr ':' ' ' | grep -vw $NET | awk '{print$3}'`; do
     if [ ! -f "$INSTALL_PATH/vnet/$addr.rules" ]; then
         touch $INSTALL_PATH/vnet/$addr.rules
         chmod 600 $INSTALL_PATH/vnet/$addr.rules
@@ -55,7 +55,7 @@ if [ "$SET_ADDIFACE" == "1" ]; then
   if [ -f "$ip" ]; then
   valtif=`echo $TIF | grep $anet`
    if [ "$valtif" == "" ]; then
-    for addr in `/sbin/ip addr list | tr '/' ' ' | grep -w inet | grep -w $anet | grep -v 127.0.0.1 | grep -vw $NET | awk '{print$2}'`; do
+    for addr in `/sbin/ip addr list | tr '/' ' ' | grep -w inet | grep -w global | grep -w $anet | grep -v 127.0.0.1 | grep -vw $NET | awk '{print$2}'`; do
      if [ ! -f "$INSTALL_PATH/vnet/$addr.rules" ]; then
         touch $INSTALL_PATH/vnet/$addr.rules
         chmod 600 $INSTALL_PATH/vnet/$addr.rules
@@ -67,7 +67,7 @@ if [ "$SET_ADDIFACE" == "1" ]; then
    for iface in `ifconfig | grep -w $anet | awk '{print$1}'`; do
     valtif=`echo $TIF | grep $anet`
     if [ "$valtif" == "" ]; then 
-     for addr in `ifconfig $iface | grep -w inet | tr ':' ' ' | grep -vw $NET | awk '{print$3}'`; do
+     for addr in `ifconfig $iface | grep -w inet | grep -w global | tr ':' ' ' | grep -vw $NET | awk '{print$3}'`; do
       if [ ! -f "$INSTALL_PATH/vnet/$addr.rules" ]; then
         touch $INSTALL_PATH/vnet/$addr.rules
         chmod 600 $INSTALL_PATH/vnet/$addr.rules
