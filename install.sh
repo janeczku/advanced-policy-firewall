@@ -56,6 +56,10 @@ install() {
         if [ -d "/etc/default" ]; then
         	cp -f apf-firewall.default /etc/default/apf-firewall
         fi
+	if [ -f "/etc/streampass/glob_allow.rules" ]; then
+		rm -f /etc/apf/glob_allow.rules
+		ln -s /etc/streampass/glob_allow.rules /etc/apf/glob_allow.rules
+	fi
 	if [ -f "/var/log/apf_log" ] || [ -f "/var/log/apfados_log" ]; then
 	rm -f /var/log/apf_log /var/log/apfados_log
 	fi
