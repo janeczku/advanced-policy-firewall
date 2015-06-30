@@ -2,3 +2,6 @@ eout "{glob} loading postroute.rules"
 
 # place your custom routing rules below
 
+# China IP blocker
+/usr/local/sbin/geoblock.sh >> /dev/null 2>&1 &
+iptables -I INPUT -m set --match-set geoblock src -j DROP
