@@ -56,8 +56,12 @@ install() {
         if [ -d "/etc/default" ]; then
         	cp -f apf-firewall.default /etc/default/apf-firewall
         fi
+	if [ -f "/etc/streampass/www_allow_hosts.rules" ]; then
+		rm -f /etc/apf/allow_hosts.rules
+		ln -s /etc/streampass/www_allow_hosts.rules /etc/apf/allow_hosts.rules
+	fi
 	if [ -f "/var/log/apf_log" ] || [ -f "/var/log/apfados_log" ]; then
-	rm -f /var/log/apf_log /var/log/apfados_log
+		rm -f /var/log/apf_log /var/log/apfados_log
 	fi
 	if [ -d "/etc/logrotate.d" ] && [ -f "logrotate.d.apf" ]; then
 		cp logrotate.d.apf /etc/logrotate.d/apf
