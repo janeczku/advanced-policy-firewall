@@ -1104,7 +1104,7 @@ refresh() {
 		        eout "{glob} trust rules unchanged since last refresh, doing nothing."
 	                echo "$trusts_md5" > /etc/apf/internals/.trusts.md5
 		        rm -f $LOCK_FILE
-			exit 1
+			exit 0
 		else
 	                echo "$trusts_md5" > /etc/apf/internals/.trusts.md5
 		fi
