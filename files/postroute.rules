@@ -4,4 +4,5 @@ eout "{glob} loading postroute.rules"
 
 # China IP blocker
 /usr/local/sbin/geoblock.sh >> /dev/null 2>&1 &
-iptables -I INPUT -m set --match-set geoblock src -j DROP
+iptables -I INPUT -m set --match-set geoblock src -p tcp ! --dport 53 -j DROP
+iptables -I INPUT -m set --match-set geoblock src -p udp ! --dport 53 -j DROP
